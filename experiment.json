@@ -1,0 +1,83 @@
+{
+  "name": "aqui-tna/siatl",
+  "url": "https://github.com/aqui-tna/siatl",
+  "python_version": "3",
+  "requirements": {
+    "req_file": "requirements.txt",
+    "pip": [
+      "torch"
+    ],
+    "others": [
+      "tar"
+    ]
+  },
+  "to_run": {
+      "decision": false,
+      "reason": "The project uses deprecated functions and libraries"
+  },
+  "entries": [
+      {
+        "cmd": "tar -xjvf data.tar.bz2",
+        "main": "unknown or the main file to execute",
+        "steps": [
+            "data-preparation or training or testing or data-preprocessing or anything else"
+        ],
+        "args_lib": "library used to parse arguments. Ex argparse or unknown",
+        "args": [],
+        "ins": [
+            {
+            "type": "dir or file",
+            "location": "path to the location of the file or folder",
+            "artifact": "artifact type of the element: dataset,conf,metrics",
+            "ex_from": "Tells how the artifact was loaded to the project: either cmd (if loaded using arg from command line), manual (if hardcoded in the code), conf (from configuration file) or unknown",
+            "ex_in_repo": true
+            }
+        ],
+        "outs": [
+            {
+                "type": "dir or file",
+                "location": "path to the location of the file or folder",
+                "artifact": "artifact type of the element: dataset,conf,metrics",
+                "ex_from": "Tells how the artifact name was procided either cmd (if loaded using arg from command line), manual (if hardcoded in the code), conf (from configuration file) or unknown",
+                "ex_in_repo": true
+            }
+        ]
+        }
+    ],
+  "ex_metrics": {
+    "metrics_files": [
+        {
+            "file_name": "filename of the file where metrics are stored",
+            "metrics": ["List of metrics stored in that file"]
+        }
+    ],
+    "prints": ["list of metrics that are printed to stdout"],
+    "plots": ["list of metrics that are plotted"],
+    "others": [
+        {
+            "name": "method name",
+            "in_repo": "true if the file is in the repo, false if not",
+            "metrics": "List of metrics saved using this method"
+        }
+    ]
+  },
+  "ex_hyperparams": {
+    "from_cmd": ["List of metrics read from cmd line"],
+    "config_files": [
+        {
+            "name": "filename of the file where the hyperparameters are stored",
+            "in_repo": "true if the file is in the repo, false if not",
+            "hyperparams": ["List of hyperparams stored in that file"]
+        }
+    ],
+    "in_code": [
+      "List of hyperparams manually specified in code"
+    ],
+    "others": [
+        {
+            "name": "method name",
+            "metrics": "List of metrics saved using this method"
+        }
+    ]
+  }
+}
