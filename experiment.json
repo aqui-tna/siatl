@@ -1,7 +1,7 @@
 {
-  "name": "aqui-tna/siatl",
+  "name": "alexandra-chron/siatl",
   "url": "https://github.com/aqui-tna/siatl",
-  "python_version": "3",
+  "python_version": "3.6",
   "requirements": {
     "req_file": "requirements.txt",
     "pip": [
@@ -12,71 +12,151 @@
     ]
   },
   "to_run": {
-      "decision": false,
-      "reason": "The project uses deprecated functions and libraries"
+      "decision": true,
+      "reason": ""
   },
   "entries": [
       {
-        "cmd": "tar -xjvf data.tar.bz2",
-        "main": "unknown or the main file to execute",
+        "cmd": "python models/sent_lm.py",
+        "main": "training",
         "steps": [
             "data-preparation or training or testing or data-preprocessing or anything else"
         ],
-        "args_lib": "library used to parse arguments. Ex argparse or unknown",
-        "args": [],
+        "args_lib": "argparse",
+        "args": [
+          {
+              "names": [
+                  "-i", 
+                  "--input"
+              ],
+              "input": true,
+              "dest": "input",
+              "ex_has_default": true,
+              "default": "lm_20m_word.yaml",
+              "type": "str",
+              "mandatory": false
+          }
+      ],
         "ins": [
             {
-            "type": "dir or file",
-            "location": "path to the location of the file or folder",
-            "artifact": "artifact type of the element: dataset,conf,metrics",
-            "ex_from": "Tells how the artifact was loaded to the project: either cmd (if loaded using arg from command line), manual (if hardcoded in the code), conf (from configuration file) or unknown",
+            "type": "dir",
+            "location": "model_configs/lm_20m_word.yaml",
+            "artifact": "lm_20m_word.yaml",
+            "ex_from": "conf",
             "ex_in_repo": true
             }
         ],
         "outs": [
             {
-                "type": "dir or file",
-                "location": "path to the location of the file or folder",
-                "artifact": "artifact type of the element: dataset,conf,metrics",
-                "ex_from": "Tells how the artifact name was procided either cmd (if loaded using arg from command line), manual (if hardcoded in the code), conf (from configuration file) or unknown",
-                "ex_in_repo": true
+                "type": "",
+                "location": "",
+                "artifact": "",
+                "ex_from": "",
+                "ex_in_repo": false
             }
         ]
-        }
+        },
+        {
+          "cmd": "python models/run_clf.py",
+          "main": "run_clf.py",
+          "steps": [
+              "Running to fine-tune"
+          ],
+          "args_lib": "argparse",
+          "args": [
+            {
+                "names": [
+                    "-i",
+                    "--input"
+                ],
+                "input": true,
+                "dest": "input",
+                "ex_has_default": true,
+                "default": "SCV2_aux_ft_gu.yaml",
+                "type": "str",
+                "mandatory": false
+            },
+            {
+                "names": [
+                    "-t",
+                    "--transfer"
+                ],
+                "input": false,
+                "dest": "transfer",
+                "ex_has_default": true,
+                "default": false,
+                "type": "float",
+                "mandatory": false
+            },
+            {
+                "names": [
+                    "-a",
+                    "--aux_loss"
+                ],
+                "input": false,
+                "dest": "aux_loss",
+                "ex_has_default": true,
+                "default": false,
+                "type": "float",
+                "mandatory": false
+            }
+        ],
+          "ins": [
+              {
+              "type": "dir",
+              "location": "model_configs/SCV2_aux_ft_gu.yaml",
+              "artifact": "SCV2_aux_ft_gu.yaml",
+              "ex_from": "conf",
+              "ex_in_repo": true
+              }
+          ],
+          "outs": [
+              {
+                  "type": "",
+                  "location": "",
+                  "artifact": "",
+                  "ex_from": "",
+                  "ex_in_repo": false
+              }
+          ]
+          }
     ],
   "ex_metrics": {
     "metrics_files": [
         {
-            "file_name": "filename of the file where metrics are stored",
-            "metrics": ["List of metrics stored in that file"]
+            "file_name": "",
+            "metrics": [""]
         }
     ],
-    "prints": ["list of metrics that are printed to stdout"],
-    "plots": ["list of metrics that are plotted"],
+    "prints": [""],
+    "plots": [""],
     "others": [
         {
             "name": "method name",
             "in_repo": "true if the file is in the repo, false if not",
-            "metrics": "List of metrics saved using this method"
+            "metrics": ["loss","accuracy","f1"]
         }
     ]
   },
   "ex_hyperparams": {
-    "from_cmd": ["List of metrics read from cmd line"],
+    "from_cmd": ["--aux_loss","--transfer"],
     "config_files": [
         {
-            "name": "filename of the file where the hyperparameters are stored",
-            "in_repo": "true if the file is in the repo, false if not",
-            "hyperparams": ["List of hyperparams stored in that file"]
-        }
+            "name": "model_configs/lm20m_70K",
+            "in_repo": "true",
+            "hyperparams": ["weight_decay","epochs","batch_size", "log_interval", "checkpoint_interval"]
+        },
+        {
+          "name": "model_configs/scv2_aux_ft_gu",
+          "in_repo": "true",
+          "hyperparams": ["weight_decay","epochs","batch_size", "log_interval", "checkpoint_interval","exp_decay","unfreeze_rnn"]
+      }
     ],
-    "in_code": [
-      "List of hyperparams manually specified in code"
-    ],
+    "in_code": [],
     "others": [
         {
-            "name": "method name",
-            "metrics": "List of metrics saved using this method"
+            "name": "sent_clf",
+            "metrics": "loss, accuracy"
         }
     ]
   }
